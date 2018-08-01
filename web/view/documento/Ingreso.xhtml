@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../../template/Template.xhtml">
+            <ui:define name="content">
+                <h:form id="formDatos">
+                    <p:growl id="growl" life="2000" />
+                    <p:panelGrid columns="2" id="pgDatos" rendered="true">
+                        
+                        <p:outputLabel for="ctasCtes" value="Cuentas Corrientes"/>  
+                        <h:selectOneMenu id="ctasCtes" value="#{doumentoCtrl.cuentaCorriente.cuenta}" required="true" >
+                            <f:selectItem  itemLabel="Sin Selección" />
+                            <f:selectItems value="#{doumentoCtrl.listadoCtasCtes}" var="cctes" itemLabel="#{cctes.cuenta} - #{cctes.banco}" itemValue="#{cctes.cuenta}" />
+                        </h:selectOneMenu>
+
+                        <p:outputLabel for="docuementoTipo" value="Ducumento de Tipo"/>
+                        <h:selectOneMenu id="docuementoTipo" value="#{doumentoCtrl.documentoTipo.codDoc}" required="true">
+                            <f:selectItem  itemLabel="Sin Selección"/>
+                            <f:selectItems value="#{doumentoCtrl.listadoTiposDocumentos}" var="dt" itemLabel="#{dt.nombre}" itemValue="#{dt.codDoc}" />
+                        </h:selectOneMenu>
+
+                        <p:outputLabel for="txtFechaDoc" value="Fecha Emisión" />
+                        <p:calendar id="txtFechaDoc" navigator="true" effect="blind" locale="es"     
+                                    value="#{doumentoCtrl.documento.fechaIngreso}" required="true"/>
+
+                        <p:outputLabel for="txtSerie" value="Nº de Serie"/>
+                        <p:inputText id="txtSerie" value="#{doumentoCtrl.documento.serie}"/>
+
+                        <p:outputLabel for="txtValor" value="Valor Monto"/>
+                        <p:inputText id="txtValor" value="#{doumentoCtrl.documento.monto}" required="true">
+                            <f:convertNumber pattern="¤#,##0.00" currencySymbol="$" />
+                        </p:inputText>
+                        
+                        <p:outputLabel for="txtNombre"  value="Nombre"/>
+                        <p:inputText id="txtNombre" value="#{doumentoCtrl.documento.nombre}"/>
+                        
+                        <h:column/>
+                    </p:panelGrid>
+                    <p:commandButton id="btnRegistrar" value="Registrar" 
+                                     actionListener="#{doumentoCtrl.registrarIngreso}" update="pgDatos, growl"  />
+                    
+                </h:form>
+                <h:outputScript library="js" name="calendar_es.js"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
