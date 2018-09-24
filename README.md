@@ -1,2 +1,5 @@
 # bancoPruebas
-Pruebas de como debiera trabajar una cuenta corriente
+
+Crud demo for current account movement tests.
+
+Made with java jsf + primefaces + mysql
